@@ -1,0 +1,13 @@
+[Unit]
+Description=Commercium Full Node
+
+[Service]
+Type=simple
+User=cmmd
+Group=cmmd
+WorkingDirectory=/var/cmmd
+ExecStart=/opt/commercium/bin/cmmd --appdata=/var/cmmd
+Restart=on-abnormal
+
+[Install]
+WantedBy=multi-user.target

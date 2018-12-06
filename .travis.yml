@@ -1,0 +1,37 @@
+language: go
+  
+matrix:
+  include:
+    - os: linux
+      dist: "trusty"
+      env: GOVERSION=1.9
+      services: docker
+      
+    - os: linux
+      dist: "trusty"
+      env: GOVERSION=1.10
+      services: docker      
+      
+    - os: osx
+      osx_image: xcode9.4
+      env: GOVERSION=1.9
+      go: 1.9.x
+      
+    - os: osx
+      osx_image: xcode9.4
+      env: GOVERSION=1.10
+      go: 1.10.x     
+
+sudo: required
+install: true
+
+cache:
+  directories:
+    - ~/.cache
+
+before_install:
+  - if [[ "$TRAVIS_OS_NAME" == "osx" ]] ; then bash ./travis_osx_before_install.sh ; fi
+
+script:
+  - if [[ "$TRAVIS_OS_NAME" == "osx" ]]   ; then ./run_tests.sh local      ; fi
+  - if [[ "$TRAVIS_OS_NAME" == "linux" ]] ; then ./run_tests.sh $GOVERSION ; fi
